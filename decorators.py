@@ -27,10 +27,14 @@ display_info("John", 25)
 
 # Practical Uses Below
 
+# The line below and wraps are required to use wrappers in wraps correctly
+from functools import wraps
+
 def my_logger(orig_func):
     import logging
     logging.basicConfig(filename='{}.log'.format(orig_func.__name__), level=logging.INFO)
 
+    @wraps(orig_func)
     def wrapper(*args, **kwargs):
         logging.info('Ran with args: {}, and kwargs: {}'.format(args, kwargs))
         return orig_func(*args, **kwargs)
@@ -40,6 +44,7 @@ def my_logger(orig_func):
 def my_timer(orig_func):
     import time
 
+    @wraps(orig_func)
     def wrapper(*args, **kwargs):
         t1 = time.time()
         result = orig_func(*args, **kwargs)
@@ -49,8 +54,26 @@ def my_timer(orig_func):
 
     return wrapper
 
+
 @my_logger
 def display_info_time(name, age):
     print('display_info_time ran with arguments ({}, {})'.format(name, age))
 
+import time
+
+@my_timer
+def display_with_time(name, age):
+    time.sleep(1)
+    print('display_with_time ran with arguments ({}, {})'.format(name, age))
+
 display_info_time("Check", 12)
+
+display_with_time("Wow", 21)
+
+@my_logger
+@my_timer
+def both_displays(name, age):
+    time.sleep(1)
+    print('both_displays ran with arguments ({}, {})'.format(name, age))
+
+both_displays("John", 100)
