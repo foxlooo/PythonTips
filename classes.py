@@ -112,10 +112,15 @@ class Manager(Employees):
 #Testing
 emp_1 = Employees("Foxlooo", "Omega", 50000)
 emp_2 = Employees("Mary", "Lu", 60000)
-print(emp_1.__dict__)
-#emp_1.__privateMethod() This line will Error out
-#print(emp_1.__greeting) This will Error out
+#print(emp_1.__dict__) /// Gets Properties
+#print(dir(emp_1)) ///////// This can get private properties
+#emp_1.__privateMethod() /// This line will Error out
+#print(emp_1.__greeting) /// This will Error out
 emp_1.publicMethod()
+#print(emp_1._Employees__greeting) /// This will Bypass the Private Property
+#emp_1._Employees__privateMethod() /// This will Bypass the Private Method
+
+### Note: print(help(Employees)) will not include the private properties, but (dir(Employees)) will
 print()
 
 ################### Testing Class Methods and Static Methods #######################
@@ -152,7 +157,7 @@ print(emp_1.fullName)
 print()
 ####################################################################################
 
-############################# Testing Employees ####################################
+############################# Testing Inheritance ##################################
 
 dev_1 = Developer('Corey', 'Schafer', 50000, "Python")
 # print(help(Developer))
@@ -170,4 +175,6 @@ mgr1.print_emps()
 print(isinstance(mgr1, Employees))
 print(isinstance(mgr1, Developer))
 print(issubclass(Developer, Employees))
+
+print(dev_1._Employees__greeting)
 ####################################################################################
