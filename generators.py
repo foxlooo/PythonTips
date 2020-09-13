@@ -16,3 +16,15 @@ newNumsGen = (x*x for x in [1,2,3,4,5])
 print(newNumsNotGenerator)
 print(newNumsGen)
 print(list(newNumsGen))
+
+# Infinite Generaor #
+
+def squareInf(num = 10):
+    i = 0
+    while i != num:
+        yield i * i
+        i += 1
+
+for x in squareInf():
+    print(x)
+
